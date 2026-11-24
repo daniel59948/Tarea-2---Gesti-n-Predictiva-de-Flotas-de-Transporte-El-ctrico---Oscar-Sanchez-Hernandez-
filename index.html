@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FlotaTrans | Prototipo de gestión predictiva</title>
+<style>
+:root{--navy:#10243a;--blue:#176b87;--teal:#20a08a;--bg:#f3f6fa;--ink:#1b2a3a;--muted:#68788a;--line:#e2e8ef;--red:#c94b4b;--amber:#d28b25}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font:15px/1.5 Arial,sans-serif;color:var(--ink)}
+header{background:var(--navy);color:white;padding:20px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.brand{font-size:21px;font-weight:700;letter-spacing:.3px}.brand small{display:block;font-size:12px;color:#b8c9d8;font-weight:400}
+.status{font-size:12px;color:#cde5df}.layout{display:grid;grid-template-columns:235px 1fr;min-height:calc(100vh - 74px)}
+nav{background:#fff;border-right:1px solid var(--line);padding:22px 14px}
+nav .label{font-size:11px;text-transform:uppercase;color:#8392a2;font-weight:bold;padding:6px 12px}
+nav button{width:100%;text-align:left;border:0;background:transparent;padding:12px;border-radius:8px;margin:3px 0;color:#34485d;cursor:pointer;font-size:14px}
+nav button.active,nav button:hover{background:#eaf4f6;color:#0c6175;font-weight:bold}
+main{padding:28px;max-width:1200px;width:100%;margin:auto}
+h1{font-size:25px;margin:0 0 5px;color:var(--navy)}.sub{color:var(--muted);margin-bottom:22px}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:14px;margin:18px 0}
+.card,.panel{background:white;border:1px solid var(--line);border-radius:12px;padding:17px;box-shadow:0 2px 8px #1a2c3b08}
+.metric{font-size:25px;font-weight:bold;color:var(--navy)}.metric-label{color:var(--muted);font-size:12px}
+.grid2{display:grid;grid-template-columns:1.3fr 1fr;gap:16px}
+.panel h2{font-size:16px;margin:0 0 14px;color:var(--navy)}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-size:11px;text-transform:uppercase}
+.pill{border-radius:30px;padding:4px 9px;font-size:11px;font-weight:bold;background:#e8f5f0;color:#17795e}.high{background:#fff0ed;color:#b13e36}.medium{background:#fff5e6;color:#9a6412}
+button.primary{border:0;border-radius:8px;padding:11px 16px;background:var(--blue);color:white;cursor:pointer;font-weight:bold}
+button.secondary{border:1px solid #cad5df;border-radius:8px;padding:10px 14px;background:white;color:#29445a;cursor:pointer}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+form{display:grid;gap:13px;max-width:720px}label{font-size:13px;font-weight:bold;color:#34485d}input,select,textarea{width:100%;padding:11px;border:1px solid #ccd7e1;border-radius:7px;font:14px Arial;background:white}textarea{min-height:95px;resize:vertical}
+.notice{padding:12px 14px;border-radius:8px;background:#edf6f8;color:#245b6c;font-size:13px;margin:12px 0}
+.alert{border-left:4px solid var(--red);background:#fff7f5;padding:13px;border-radius:8px;margin:10px 0}
+.hidden{display:none}.footer{font-size:12px;color:#8794a1;margin-top:24px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}nav{display:flex;overflow:auto;border-right:0;border-bottom:1px solid var(--line);padding:8px}nav .label{display:none}nav button{white-space:nowrap;width:auto}.cards{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}main{padding:18px}header{padding:16px}}
+</style>
+</head>
+<body>
+<header><div class="brand">FLOTATRANS <small>Gestión predictiva de flotas eléctricas</small></div><div class="status">● Prototipo académico · Datos simulados</div></header>
+<div class="layout">
+<nav>
+<div class="label">Menú principal</div>
+<button class="active" data-page="dashboard">▦ Resumen de flota</button>
+<button data-page="report">＋ Reportar una falla</button>
+<button data-page="alerts">⚠ Alertas predictivas</button>
+<button data-page="maintenance">▤ Mantenimiento</button>
+<button data-page="reports">▥ Indicadores y reportes</button>
+</nav>
+<main>
+<section id="dashboard" class="page">
+<h1>Resumen de flota</h1><div class="sub">Vista general de operación · Actualización simulada 08:42</div>
+<div class="cards">
+<div class="card"><div class="metric">38/45</div><div class="metric-label">Unidades disponibles</div></div>
+<div class="card"><div class="metric">5</div><div class="metric-label">En mantenimiento</div></div>
+<div class="card"><div class="metric">2</div><div class="metric-label">Alertas de riesgo alto</div></div>
+<div class="card"><div class="metric">1,18</div><div class="metric-label">Consumo promedio kWh/km</div></div>
+</div>
+<div class="grid2">
+<div class="panel"><h2>Estado reciente de unidades</h2><table><thead><tr><th>Unidad</th><th>Batería</th><th>Temperatura</th><th>Estado</th></tr></thead><tbody>
+<tr><td>BUS-018</td><td>82 %</td><td>31 °C</td><td><span class="pill">Normal</span></td></tr>
+<tr><td>BUS-024</td><td>24 %</td><td>44 °C</td><td><span class="pill high">Riesgo alto</span></td></tr>
+<tr><td>BUS-031</td><td>67 %</td><td>35 °C</td><td><span class="pill medium">Revisión</span></td></tr>
+<tr><td>BUS-042</td><td>91 %</td><td>29 °C</td><td><span class="pill">Normal</span></td></tr>
+</tbody></table></div>
+<div class="panel"><h2>Alertas que requieren atención</h2>
+<div class="alert"><b>BUS-024 · Temperatura elevada</b><br><small>Riesgo alto · Sensor de batería · 08:39</small></div>
+<div class="alert" style="border-color:var(--amber);background:#fffaf1"><b>BUS-031 · Autonomía reducida</b><br><small>Riesgo medio · 08:34</small></div>
+<button class="secondary" onclick="showPage('alerts')">Ver todas las alertas</button></div>
+</div></section>
+
+<section id="report" class="page hidden">
+<h1>Reportar una falla</h1><div class="sub">Formulario móvil para conductores y técnicos (CU-02 · RF-02)</div>
+<div class="panel"><div class="notice">Si no hay conexión, el reporte puede guardarse temporalmente y sincronizarse después.</div>
+<form id="faultForm">
+<div><label>Unidad</label><select required><option value="">Seleccione unidad</option><option>BUS-018</option><option>BUS-024</option><option>BUS-031</option><option>BUS-042</option></select></div>
+<div><label>Tipo de falla</label><select required><option value="">Seleccione categoría</option><option>Batería</option><option>Temperatura</option><option>Sistema eléctrico</option><option>Frenos</option><option>Otro</option></select></div>
+<div><label>Descripción</label><textarea required placeholder="Describa lo observado..."></textarea></div>
+<div><label>Fotografía (simulación de adjunto)</label><input type="file" accept="image/*"></div>
+<div><label>Ubicación</label><input placeholder="Ubicación o referencia de ruta"></div>
+<div class="actions"><button class="primary" type="submit">Enviar reporte</button><button class="secondary" type="reset">Limpiar</button></div>
+</form><div id="formResult" class="notice hidden"></div></div></section>
+
+<section id="alerts" class="page hidden">
+<h1>Alertas predictivas</h1><div class="sub">Lecturas y recomendaciones ilustrativas · CU-03 · RF-03 / RF-04</div>
+<div class="panel"><h2>BUS-024 · Riesgo alto de temperatura</h2><span class="pill high">ALTO</span>
+<p>Lectura simulada: 44 °C · Sensor de batería · 08:39</p><p><b>Recomendación:</b> aplicar el protocolo de seguridad aprobado y solicitar revisión técnica. La predicción no sustituye la decisión del personal autorizado.</p>
+<div class="actions"><button class="primary" onclick="alert('Alerta reconocida en esta demostración.')">Reconocer alerta</button><button class="secondary" onclick="showPage('maintenance')">Crear / consultar orden</button></div></div>
+<div class="panel" style="margin-top:14px"><h2>BUS-031 · Autonomía reducida</h2><span class="pill medium">MEDIO</span><p>La autonomía estimada se encuentra por debajo del umbral configurado. Revisar historial de batería y planificación de ruta.</p></div>
+</section>
+
+<section id="maintenance" class="page hidden">
+<h1>Órdenes de mantenimiento</h1><div class="sub">Seguimiento de incidencias y trabajo técnico · CU-04 · RF-05</div>
+<div class="panel"><table><thead><tr><th>Orden</th><th>Unidad</th><th>Trabajo</th><th>Responsable</th><th>Estado</th></tr></thead><tbody>
+<tr><td>OT-1042</td><td>BUS-024</td><td>Revisión de batería</td><td>Técnico A</td><td><span class="pill high">Prioritaria</span></td></tr>
+<tr><td>OT-1038</td><td>BUS-031</td><td>Diagnóstico autonomía</td><td>Técnico B</td><td><span class="pill medium">En proceso</span></td></tr>
+<tr><td>OT-1031</td><td>BUS-012</td><td>Inspección general</td><td>Técnico C</td><td><span class="pill">Programada</span></td></tr>
+</tbody></table><div class="actions"><button class="primary" onclick="alert('Formulario de creación representado en este prototipo.')">＋ Nueva orden</button><button class="secondary" onclick="alert('Historial de estados simulado.')">Ver historial</button></div></div>
+</section>
+
+<section id="reports" class="page hidden">
+<h1>Indicadores y reportes</h1><div class="sub">Información para supervisión · CU-05 · RF-06</div>
+<div class="cards"><div class="card"><div class="metric">84,4 %</div><div class="metric-label">Disponibilidad de flota</div></div><div class="card"><div class="metric">1,18</div><div class="metric-label">kWh/km promedio</div></div><div class="card"><div class="metric">7</div><div class="metric-label">Incidencias abiertas</div></div><div class="card"><div class="metric">4</div><div class="metric-label">Fallas recurrentes batería</div></div></div>
+<div class="panel"><h2>Filtros del reporte</h2><div class="grid2"><div><label>Periodo</label><select><option>Últimos 7 días</option><option>Últimos 30 días</option><option>Mes actual</option></select></div><div><label>Unidad</label><select><option>Todas las unidades</option><option>BUS-018</option><option>BUS-024</option></select></div></div><div class="actions"><button class="primary" onclick="alert('Reporte actualizado con datos de demostración.')">Aplicar filtros</button><button class="secondary" onclick="alert('Exportación simulada: en el sistema real se generaría el archivo.')">Exportar reporte</button></div></div>
+</section>
+<div class="footer">Prototipo de baja fidelidad navegable elaborado para fines académicos. Los valores, alertas y acciones son demostrativos; no existe conexión real con sensores, usuarios ni modelos de IA.</div>
+</main></div>
+<script>
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+document.getElementById('faultForm').addEventListener('submit',e=>{e.preventDefault();const n='FT-'+Math.floor(10000+Math.random()*89999);const box=document.getElementById('formResult');box.classList.remove('hidden');box.textContent='Reporte '+n+' registrado en esta demostración. En una implementación real se guardaría en el servidor o quedaría pendiente de sincronización.';e.target.reset();});
+</script>
+</body></html>
